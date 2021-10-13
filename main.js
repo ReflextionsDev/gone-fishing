@@ -1,3 +1,5 @@
+// Stretch goals > make weight determined by desc 1, and value mult from desc2
+
 // REQs
 // The user is able to 'catch' fish with randomly generated names, weights, and values
 // The time of day is shown to the user
@@ -10,28 +12,44 @@
 // Prompt sync
 const prompt = require('prompt-sync')({ sigint: true })
 
-// Game vars
+// Game Vars
 const timeStart = 6
 const timeLimit = 6
 const timeMax = timeStart + timeLimit
-const weightMax = 10
+const weightLimit = 10
+const weightMin = 0.1
+const weightMax = 15
+const valueMin = 0.05
+const valueMax = 50
 
-// Player vars
+
+// Player Vars
 let weight = 0
 let timePassed = 0
 let fishCaught = 0
 let money = 0
+let fish = []
+
+// Fish Vars
+let fishDesc1 = ['Enormous', 'Tiny', 'Small', 'Large', 'Regular', 'Massive']
+let fishDesc2 = ['Red', 'Blue', 'Green', 'Yellow', 'Black', 'White', 'Rare', 'Common', 'Ancient', 'Young', 'Old', 'Ugly', 'Pretty']
+let fishNames = ['Trout', 'Goldfish', 'Tuna', 'Carp', 'Blobfish', 'Footballfish', 'Snakehead', 'Sunfish', 'Pike', 'Catfish']
+
 
 let x = "PLACEHOLDER"
 
-// Fish objects > name, weight, value
+
+console.log(getFish())
+console.log(getFish())
+console.log(getFish())
+console.log(getFish())
 
 // Game
 navIntro()
 
 function navIntro() {
     console.log('\n' + '================= [GONE FISHING] ====================' + '\n')
-    console.log("You've gone fishing! Try to maximize the value of your caught fish. You can fish for " + timeLimit + " hours (till " + formatTime(timeMax) + ") and can catch at most " + weightMax + " lbs of fish.")
+    console.log("You've gone fishing! Try to maximize the value of your caught fish. You can fish for " + timeLimit + " hours (till " + formatTime(timeMax) + ") and can catch at most " + weightLimit + " lbs of fish.")
     navBreak()
     navMain()
 }
@@ -56,6 +74,9 @@ function navMain() {
 // replace with fish obj
 
 function navFish() {
+
+
+
     console.log("You caught a " + x + " weighing " + x + " lbs and valued at " + x)
 
     console.log("Your action: [c]atch or [r]elease?")
@@ -86,6 +107,8 @@ function navEnd() {
 }
 
 
+// Utilities
+
 // Returns a string in 12hr format
 function formatTime(time) {
 
@@ -102,3 +125,33 @@ function formatTime(time) {
 function formatMoney(money) {
     return money
 }
+
+function randomDouble(min, max) {
+    let num = Math.random() * (max - min) + min;
+    num = num.toFixed(2)
+    return num;
+}
+
+function randomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+
+function getFish() {
+    let fishName = fishDesc1[randomInt(0, fishDesc1.length - 1)] + " " + fishDesc2[randomInt(0, fishDesc2.length - 1)] + " " + fishNames[randomInt(0, fishNames.length - 1)]
+    let fishWeight = randomDouble(weightMin, weightMax)
+    let fishValue = randomDouble(valueMin, valueMax)
+
+    let fish = newFish(fishName, fishWeight, fishValue)
+    return fish
+}
+
+function newFish(name, weight, value) {
+    let fish = {}
+    fish.name = name
+    fish.weight = weight
+    fish.value = value
+    return fish
+}
+
+
