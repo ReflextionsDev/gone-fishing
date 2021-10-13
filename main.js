@@ -1,12 +1,8 @@
 // Stretch goals > make weight determined by desc 1, and value mult from desc2
 
 // REQs
-// The user is able to 'catch' fish with randomly generated names, weights, and values
-// The time of day is shown to the user
-// The user can only fish for six hours
 // The user can only catch at maximum 10 lbs of fish
 // Each turn, the sum of the user's caught fishes' weight and value is displayed
-// You make at least three commits in git (after completing parts of the project)
 // At the end of the game, all the fish that the user caught are displayed along with a sum of their weight and value
 
 // Prompt sync
@@ -22,7 +18,6 @@ const weightMax = 15
 const valueMin = 0.05
 const valueMax = 50
 
-
 // Player Vars
 let totalWeight = 0
 let totalValue = 0
@@ -35,15 +30,6 @@ let fish = []
 let fishDesc1 = ['Enormous', 'Tiny', 'Small', 'Large', 'Regular', 'Massive']
 let fishDesc2 = ['Red', 'Blue', 'Green', 'Yellow', 'Black', 'White', 'Rare', 'Common', 'Ancient', 'Young', 'Old', 'Ugly', 'Pretty']
 let fishNames = ['Trout', 'Goldfish', 'Tuna', 'Carp', 'Blobfish', 'Footballfish', 'Snakehead', 'Sunfish', 'Pike', 'Catfish']
-
-
-let x = "PLACEHOLDER"
-
-
-console.log(getFish())
-console.log(getFish())
-console.log(getFish())
-console.log(getFish())
 
 // Game
 navIntro()
@@ -64,10 +50,26 @@ function navMain() {
 
     console.log(fish)
 
+    // Working here
+    // run through array, add up stuff
 
-    fishCaught = 1
-    totalWeight = 2
-    totalValue = 3
+    fishCaught = 0
+    totalWeight = 0
+    totalValue = 0
+
+
+    for (let i = 0; i < fish.length; i++) {
+        const index = fish[i]
+
+        fishCaught++
+        totalWeight+= Number(fish[i].weight)
+        totalValue+= Number(fish[i].value)
+        
+    }
+
+
+
+
 
 
 
@@ -75,7 +77,7 @@ function navMain() {
         navEnd()
     } else {
         console.log("The time is " + formatTime(timeStart + timePassed) + ". So far you've caught: ")
-        console.log(fishCaught + " fish, " + totalWeight + " lbs, " + totalValue)
+        console.log(fishCaught + " fish, " + totalWeight + " lbs, " + formatMoney(totalValue))
         console.log("Press any button to continue")
         prompt('')
         navFish()
@@ -111,7 +113,8 @@ function navFish() {
 
 function navEnd() {
     console.log("The time is " + formatTime(timeStart + timePassed) + ". Time's up!")
-    console.log("You caught " + x + " fish: ")
+    console.log("You caught " + fishCaught + " fish: ")
+    // To Do
 }
 
 
@@ -132,7 +135,6 @@ function formatTime(time) {
 // Formats money into dollar format ($1.03)
 function formatMoney(money) {
     let output = '$' + Number(money).toFixed(2)
-    // console.log(typeof money)
     return output
 }
 
