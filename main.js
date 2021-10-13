@@ -22,41 +22,41 @@ let timePassed = 0
 let fishCaught = 0
 let money = 0
 
-let yeet = "gadsfgsf"
+let x = "PLACEHOLDER"
 
 // Fish objects > name, weight, value
 
 // Game
-navMain()
-navBreak()
-navStatus()
+navIntro()
 
-
-function navMain() {
+function navIntro() {
+    console.log('\n' + '================= [GONE FISHING] ====================' + '\n')
     console.log("You've gone fishing! Try to maximize the value of your caught fish. You can fish for " + timeLimit + " hours (till " + formatTime(timeMax) + ") and can catch at most " + weightMax + " lbs of fish.")
     navBreak()
+    navMain()
 }
 
 function navBreak() {
     console.log('\n' + '=====================================' + '\n')
 }
 
-function navStatus() {
-    console.log("The time is " + formatTime(timeStart + timePassed) + ". So far you've caught: ")
-    console.log(fishCaught + " fish, " + weight + " lbs, " + "$0.00")
+function navMain() {
 
-    console.log("Press any button to continue")
-    prompt('')
-
-    navFish()
+    if (timePassed >= timeLimit) {
+        navEnd()
+    } else {
+        console.log("The time is " + formatTime(timeStart + timePassed) + ". So far you've caught: ")
+        console.log(fishCaught + " fish, " + weight + " lbs, " + "$0.00")
+        console.log("Press any button to continue")
+        prompt('')
+        navFish()
+    }
 }
-
-
 
 // replace with fish obj
 
 function navFish() {
-    console.log("You caught a " + yeet + " weighing " + yeet + " lbs and valued at " + yeet)
+    console.log("You caught a " + x + " weighing " + x + " lbs and valued at " + x)
 
     console.log("Your action: [c]atch or [r]elease?")
     let input = prompt("")
@@ -67,10 +67,22 @@ function navFish() {
     }
 
     if (input === 'c') {
-        console.log("catch")
+        console.log("You chose to keep the fish.")
     } else if (input === 'r') {
-        console.log("release")
+        console.log("You chose to release the fish.")
     }
+
+    timePassed++
+
+    navBreak()
+    navMain()
+}
+
+
+// move to main?
+function navEnd() {
+    console.log("The time is " + formatTime(timeStart + timePassed) + ". Time's up!")
+    console.log("You caught " + x + " fish: ")
 }
 
 
