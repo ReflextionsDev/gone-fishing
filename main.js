@@ -24,7 +24,8 @@ const valueMax = 50
 
 
 // Player Vars
-let weight = 0
+let totalWeight = 0
+let totalValue = 0
 let timePassed = 0
 let fishCaught = 0
 let money = 0
@@ -60,25 +61,33 @@ function navBreak() {
 
 function navMain() {
 
+
+    console.log(fish)
+
+
+    fishCaught = 1
+    totalWeight = 2
+    totalValue = 3
+
+
+
     if (timePassed >= timeLimit) {
         navEnd()
     } else {
         console.log("The time is " + formatTime(timeStart + timePassed) + ". So far you've caught: ")
-        console.log(fishCaught + " fish, " + weight + " lbs, " + "$0.00")
+        console.log(fishCaught + " fish, " + totalWeight + " lbs, " + totalValue)
         console.log("Press any button to continue")
         prompt('')
         navFish()
     }
 }
 
-// replace with fish obj
 
 function navFish() {
 
+    let tempFish = getFish()
 
-
-    console.log("You caught a " + x + " weighing " + x + " lbs and valued at " + x)
-
+    console.log("You caught a " + tempFish.name + " weighing " + tempFish.weight + "lbs and valued at " + formatMoney(tempFish.value))
     console.log("Your action: [c]atch or [r]elease?")
     let input = prompt("")
 
@@ -89,18 +98,17 @@ function navFish() {
 
     if (input === 'c') {
         console.log("You chose to keep the fish.")
+        fish.push(tempFish)
     } else if (input === 'r') {
         console.log("You chose to release the fish.")
     }
 
     timePassed++
-
     navBreak()
     navMain()
 }
 
 
-// move to main?
 function navEnd() {
     console.log("The time is " + formatTime(timeStart + timePassed) + ". Time's up!")
     console.log("You caught " + x + " fish: ")
@@ -109,7 +117,7 @@ function navEnd() {
 
 // Utilities
 
-// Returns a string in 12hr format
+// Returns a string in 12hr format (5:31pm)
 function formatTime(time) {
 
     let m = (time % 24) < 12 ? 'am' : 'pm'
@@ -121,31 +129,37 @@ function formatTime(time) {
     return timeString
 }
 
-// To Do
+// Formats money into dollar format ($1.03)
 function formatMoney(money) {
-    return money
+    let output = '$' + Number(money).toFixed(2)
+    // console.log(typeof money)
+    return output
 }
 
+// Returns a double formated to 2 decimal places (1.23)
 function randomDouble(min, max) {
     let num = Math.random() * (max - min) + min;
     num = num.toFixed(2)
     return num;
 }
 
+// Returns a random int, inclusive
 function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+// Fish Functions
 
+// Returns a new fish object with random values
 function getFish() {
     let fishName = fishDesc1[randomInt(0, fishDesc1.length - 1)] + " " + fishDesc2[randomInt(0, fishDesc2.length - 1)] + " " + fishNames[randomInt(0, fishNames.length - 1)]
     let fishWeight = randomDouble(weightMin, weightMax)
     let fishValue = randomDouble(valueMin, valueMax)
-
     let fish = newFish(fishName, fishWeight, fishValue)
     return fish
 }
 
+// Creates a new fish object
 function newFish(name, weight, value) {
     let fish = {}
     fish.name = name
@@ -153,5 +167,3 @@ function newFish(name, weight, value) {
     fish.value = value
     return fish
 }
-
-
