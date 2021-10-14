@@ -20,7 +20,6 @@ let totalWeight = 0
 let totalValue = 0
 let timePassed = 0
 let fishCaught = 0
-let money = 0
 let fish = []
 
 // Fish Vars
