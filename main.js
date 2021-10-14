@@ -47,31 +47,10 @@ function navBreak() {
 
 function navMain() {
 
-
+    // Delete me
     console.log(fish)
 
-    // Working here
-    // run through array, add up stuff
-
-    fishCaught = 0
-    totalWeight = 0
-    totalValue = 0
-
-
-    for (let i = 0; i < fish.length; i++) {
-        const index = fish[i]
-
-        fishCaught++
-        totalWeight+= Number(fish[i].weight)
-        totalValue+= Number(fish[i].value)
-        
-    }
-
-
-
-
-
-
+    updateStats()
 
     if (timePassed >= timeLimit) {
         navEnd()
@@ -115,6 +94,14 @@ function navEnd() {
     console.log("The time is " + formatTime(timeStart + timePassed) + ". Time's up!")
     console.log("You caught " + fishCaught + " fish: ")
     // To Do
+
+    for (let i = 0; i < fish.length; i++) {
+   
+    
+        console.log('* ' + fish[i].name + ", " + fish[i].weight + "lbs, " + formatMoney(fish[i].value))
+        
+    }
+
 }
 
 
@@ -168,4 +155,18 @@ function newFish(name, weight, value) {
     fish.weight = weight
     fish.value = value
     return fish
+}
+
+// Updates total fish, weight, and value
+function updateStats() {
+    fishCaught = 0
+    totalWeight = 0
+    totalValue = 0
+
+    for (let i = 0; i < fish.length; i++) {
+        const index = fish[i]
+        fishCaught++
+        totalWeight+= Number(fish[i].weight)
+        totalValue+= Number(fish[i].value)     
+    }
 }
