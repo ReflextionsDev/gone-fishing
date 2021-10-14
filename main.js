@@ -83,7 +83,8 @@ function navFish() {
         }
     }
 
-    timePassed++
+    timePassed += randomIntInc(0.25,1.5,0.25)
+
     navBreak()
     navMain()
 }
@@ -140,6 +141,11 @@ function randomDouble(min, max) {
 // Returns a random int, inclusive
 function randomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+// Returns a random int, in increments of delta
+function randomIntInc(min, max, delta) {
+    return delta * Math.floor(Math.random() * (max - min) / delta + min / delta);
 }
 
 // Fish Functions
