@@ -1,8 +1,9 @@
 // Stretch goals
 // Make weight mult determined by desc 1, and value mult from desc2
 
-// Prompt sync
+// NPM Dependencies
 const prompt = require('prompt-sync')({ sigint: true })
+const chalk = require('chalk');
 
 // Game Vars
 const timeStart = 6
@@ -10,7 +11,7 @@ const timeLimit = 6
 const timeMax = timeStart + timeLimit
 const weightLimit = 10
 const weightMin = 0.1
-const weightMax = 15
+const weightMax = 10
 const valueMin = 0.05
 const valueMax = 50
 
@@ -31,14 +32,14 @@ let fishNames = ['Trout', 'Goldfish', 'Tuna', 'Carp', 'Blobfish', 'Footballfish'
 navIntro()
 
 function navIntro() {
-    console.log('\n' + '================= [GONE FISHING] ====================' + '\n')
-    console.log("You've gone fishing! Try to maximize the value of your caught fish. You can fish for " + timeLimit + " hours (till " + formatTime(timeMax) + ") and can catch at most " + weightLimit + " lbs of fish.")
+    console.log('\n' + chalk.blue(chalk.bold('================= [GONE FISHING] ====================')) + '\n')
+    console.log("You've gone fishing! Try to maximize the value of your caught fish. You can fish for " + chalk.bold(timeLimit) + " hours (till " + chalk.magentaBright(formatTime(timeMax)) + ") and can catch at most " + chalk.cyan(weightLimit + "lbs") + " of fish.")
     navBreak()
     navMain()
 }
 
 function navBreak() {
-    console.log('\n' + '=====================================' + '\n')
+    console.log('\n' + chalk.grey('=====================================') + '\n')
 }
 
 function navMain() {
@@ -48,8 +49,8 @@ function navMain() {
     if (timePassed >= timeLimit) {
         navEnd()
     } else {
-        console.log("The time is " + formatTime(timeStart + timePassed) + ". So far you've caught: ")
-        console.log(fishCaught + " fish, " + formatWeight(totalWeight) + ", " + formatMoney(totalValue))
+        console.log("The time is " + chalk.magentaBright(formatTime(timeStart + timePassed)) + ". So far you've caught: ")
+        console.log(chalk.yellow(fishCaught + " fish, ") + chalk.cyan(formatWeight(totalWeight) + ", ") + chalk.green(formatMoney(totalValue)))
         console.log("Press any button to continue")
         prompt('')
         navFish()
@@ -61,10 +62,10 @@ function navFish() {
 
     navBreak()
     let tempFish = getFish()
-    console.log("You caught a " + tempFish.name + " weighing " + formatWeight(tempFish.weight) + ", and valued at " + formatMoney(tempFish.value))
+    console.log("You caught a " + chalk.yellow(chalk.bold(tempFish.name)) + " weighing " + chalk.cyan(formatWeight(tempFish.weight)) + ", and valued at " + chalk.green(formatMoney(tempFish.value)))
 
     if ((Number(totalWeight) + Number(tempFish.weight)) > weightLimit) {
-        console.log("This fish would put you over " + weightLimit + "lbs, so you release it.")
+        console.log(chalk.redBright("This fish would put you over " + weightLimit + "lbs, so you release it."))
     } else {
         console.log("Your action: [c]atch or [r]elease?")
         let input = prompt("")
@@ -89,17 +90,17 @@ function navFish() {
 
 
 function navEnd() {
-    console.log("The time is " + formatTime(timeStart + timePassed) + ". Time's up!" + '\n')
-    console.log("You caught " + fishCaught + " fish: ")
+    console.log("The time is " + chalk.magentaBright(formatTime(timeStart + timePassed)) + ". Time's up!" + '\n')
+    console.log(chalk.bold("You caught " + (fishCaught + " fish: ")))
     console.log()
 
     for (let i = 0; i < fish.length; i++) {
-        console.log('* ' + fish[i].name + ", " + formatWeight(fish[i].weight) + ", " + formatMoney(fish[i].value))
+        console.log('* ' + chalk.yellow(fish[i].name) + ", " + chalk.cyan(formatWeight(fish[i].weight)) + ", " + chalk.green(formatMoney(fish[i].value)))
     }
 
     console.log()
-    console.log(`Total weight: ${totalWeight}lbs`)
-    console.log(`Total value: ${formatMoney(totalValue)}`)
+    console.log(`Total weight: ${chalk.cyan(formatWeight(totalWeight))}`)
+    console.log(`Total value: ${chalk.green(formatMoney(totalValue))}`)
 }
 
 
